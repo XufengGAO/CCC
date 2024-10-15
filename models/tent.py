@@ -1,7 +1,7 @@
 # original code copied from: https://github.com/DequanWang/tent
 import torch
 
-from models import AdaptiveModel, register
+from models.registery import AdaptiveModel, register
 from models.functional import collect_params, configure_model, softmax_entropy
 
 

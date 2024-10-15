@@ -69,6 +69,18 @@ def evaluate(args):
     if not os.path.exists(os.path.join(args.logs, exp_name)):
         os.mkdir(os.path.join(args.logs, exp_name))
 
+    # processind  |  cur_seed  |  speed
+    # ---------------------------------
+    #     0       |     43     |  1000
+    #     1       |     44     |  1000
+    #     2       |     45     |  1000
+    #     3       |     43     |  2000
+    #     4       |     44     |  2000
+    #     5       |     45     |  2000
+    #     6       |     43     |  5000
+    #     7       |     44     |  5000
+    #     8       |     45     |  5000
+
     cur_seed = [43, 44, 45][args.processind % 3]
     speed = [1000, 2000, 5000][int(args.processind / 3)]
 
@@ -97,8 +109,15 @@ def evaluate(args):
     else:
         model = registery.init(args.mode, model)
 
-    test(model, dset_path, file_name=file_name)
+    test(model, dset_name, file_name=file_name)
 
+
+# python3 eval.py
+# --mode rdumb
+# --dset /path/to/ccc/
+# --logs /logs/folder/
+# --baseline 20
+# --processind ${SLURM_ARRAY_TASK_ID} 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
